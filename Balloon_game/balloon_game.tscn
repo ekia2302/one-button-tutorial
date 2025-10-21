@@ -1,0 +1,109 @@
+[gd_scene load_steps=14 format=3 uid="uid://tl3vr0llkim1"]
+
+[ext_resource type="Script" uid="uid://cg45a33s20c2n" path="res://Balloon_game/balloon_game.gd" id="1_2vxba"]
+[ext_resource type="Texture2D" uid="uid://bund2l26ot17v" path="res://Assets/Balloon/background.png" id="1_cwted"]
+[ext_resource type="Script" uid="uid://8cl40q1l6cfg" path="res://Balloon_game/balloon.gd" id="2_2vxba"]
+[ext_resource type="Texture2D" uid="uid://be2ah6a5vtchm" path="res://Assets/Balloon/Ballon-Sheet.png" id="2_xflc3"]
+[ext_resource type="Script" uid="uid://dxnqvx0fh7p5r" path="res://Balloon_game/ground.gd" id="3_2vxba"]
+[ext_resource type="FontFile" uid="uid://hd1k0g33h3m7" path="res://Assets/Roboto/Roboto-Black.ttf" id="6_ljt5u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mnvog"]
+atlas = ExtResource("2_xflc3")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ad55e"]
+atlas = ExtResource("2_xflc3")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5stc"]
+atlas = ExtResource("2_xflc3")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e26wo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mnvog")
+}],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ad55e")
+}],
+"loop": true,
+"name": &"deflate",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e5stc")
+}],
+"loop": true,
+"name": &"inflate",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0jg5v"]
+size = Vector2(21, 31)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fw6nh"]
+distance = -79.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xflc3"]
+normal = Vector2(0, 1)
+distance = -86.0
+
+[node name="Balloon_game" type="Node2D"]
+script = ExtResource("1_2vxba")
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -10
+texture = ExtResource("1_cwted")
+
+[node name="Balloon" type="CharacterBody2D" parent="."]
+script = ExtResource("2_2vxba")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Balloon"]
+position = Vector2(-1, 55)
+sprite_frames = SubResource("SpriteFrames_e26wo")
+animation = &"inflate"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Balloon"]
+position = Vector2(-0.5, 55)
+shape = SubResource("RectangleShape2D_0jg5v")
+
+[node name="Difficulty" type="Timer" parent="Balloon"]
+wait_time = 5.0
+autostart = true
+
+[node name="Ground" type="Area2D" parent="."]
+script = ExtResource("3_2vxba")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("WorldBoundaryShape2D_fw6nh")
+
+[node name="Ceiling" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling"]
+shape = SubResource("WorldBoundaryShape2D_xflc3")
+
+[node name="Balloon_instruction" type="RichTextLabel" parent="."]
+offset_left = -79.0
+offset_top = -118.0
+offset_right = 78.0
+offset_bottom = -92.0
+theme_override_fonts/normal_font = ExtResource("6_ljt5u")
+bbcode_enabled = true
+text = "Hold space to [wave amp=30.0 freq=2.0 connected=1] inflate [/wave]"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="timeout" from="Balloon/Difficulty" to="Balloon" method="_on_difficulty_timeout"]
+[connection signal="body_entered" from="Ground" to="Ground" method="_on_body_entered"]
+[connection signal="game_over" from="Ground" to="." method="_on_ground_game_over"]
+[connection signal="game_over" from="Ground" to="Balloon" method="_on_ground_game_over"]

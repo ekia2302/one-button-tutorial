@@ -1,0 +1,118 @@
+[gd_scene load_steps=16 format=3 uid="uid://d22qen2f1fn0h"]
+
+[ext_resource type="Texture2D" uid="uid://ilrfgy02dqwf" path="res://Assets/White.png" id="1_khbho"]
+[ext_resource type="Script" uid="uid://4hsq4bgqwip0" path="res://Pump_game/pump_game.gd" id="1_mynbd"]
+[ext_resource type="Script" uid="uid://bmh68gk75x320" path="res://Pump_game/pump_and_barrel.gd" id="2_jieiu"]
+[ext_resource type="Texture2D" uid="uid://b6bw61w1aarkf" path="res://Assets/Pump/Pump-Sheet.png" id="2_kitp1"]
+[ext_resource type="Texture2D" uid="uid://hwfjttpgho1k" path="res://Assets/Pump/Barrel-Sheet.png" id="3_1p6c5"]
+[ext_resource type="Texture2D" uid="uid://7f8up15kyyw0" path="res://Assets/Pump/progressUnder.png" id="4_wbtbx"]
+[ext_resource type="Texture2D" uid="uid://kk8iuta6b0e4" path="res://Assets/Pump/progressOverlay.png" id="5_jieiu"]
+[ext_resource type="Texture2D" uid="uid://g3oxg1fp6but" path="res://Assets/Pump/progressFill.png" id="6_mynbd"]
+[ext_resource type="FontFile" uid="uid://hd1k0g33h3m7" path="res://Assets/Roboto/Roboto-Black.ttf" id="9_lqndh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1p6c5"]
+atlas = ExtResource("2_kitp1")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nd20i"]
+atlas = ExtResource("2_kitp1")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_60xuv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1p6c5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nd20i")
+}],
+"loop": true,
+"name": &"pump",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60xuv"]
+atlas = ExtResource("3_1p6c5")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wbtbx"]
+atlas = ExtResource("3_1p6c5")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jieiu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60xuv")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbtbx")
+}],
+"loop": true,
+"name": &"flow",
+"speed": 5.0
+}]
+
+[node name="Pump_game" type="Node2D"]
+script = ExtResource("1_mynbd")
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -10
+texture = ExtResource("1_khbho")
+
+[node name="Pump_and_barrel" type="Node2D" parent="."]
+position = Vector2(-21.715, -6.85)
+scale = Vector2(2.5, 2.5)
+script = ExtResource("2_jieiu")
+
+[node name="Difficulty" type="Timer" parent="Pump_and_barrel"]
+wait_time = 5.0
+autostart = true
+
+[node name="Pump" type="AnimatedSprite2D" parent="Pump_and_barrel"]
+sprite_frames = SubResource("SpriteFrames_60xuv")
+
+[node name="Barrel" type="AnimatedSprite2D" parent="Pump_and_barrel"]
+position = Vector2(22, 18)
+sprite_frames = SubResource("SpriteFrames_jieiu")
+animation = &"flow"
+
+[node name="Fill" type="TextureProgressBar" parent="Pump_and_barrel"]
+offset_left = 11.000001
+offset_top = 7.0000005
+offset_right = 44.0
+offset_bottom = 135.0
+scale = Vector2(0.175, 0.175)
+step = 0.1
+value = 100.0
+fill_mode = 3
+texture_under = ExtResource("4_wbtbx")
+texture_over = ExtResource("5_jieiu")
+texture_progress = ExtResource("6_mynbd")
+tint_progress = Color(0.35686275, 0.43137255, 0.88235295, 1)
+
+[node name="Pump_instruction" type="RichTextLabel" parent="."]
+offset_left = -87.0
+offset_top = -144.0
+offset_right = 86.0
+offset_bottom = -89.0
+theme_override_fonts/normal_font = ExtResource("9_lqndh")
+bbcode_enabled = true
+text = "Press space repeatedley to [pulse freq=4.0 color=#ffffff40 ease=-2.0]Pump[/pulse]"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="game_over" from="Pump_and_barrel" to="." method="_on_pump_and_barrel_game_over"]
+[connection signal="timeout" from="Pump_and_barrel/Difficulty" to="Pump_and_barrel" method="_on_difficulty_timeout"]
