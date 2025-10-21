@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://c54jwe662vswy"]
+
+[ext_resource type="Script" uid="uid://wcc6un6kkfmj" path="res://main_game.gd" id="1_6bm6p"]
+[ext_resource type="FontFile" uid="uid://hd1k0g33h3m7" path="res://Assets/Roboto/Roboto-Black.ttf" id="5_2pltu"]
+[ext_resource type="Texture2D" uid="uid://cu4jwyf8kxayf" path="res://Assets/Black.png" id="6_f52ns"]
+
+[node name="main_game" type="Node2D"]
+script = ExtResource("1_6bm6p")
+game_paths = Array[String](["res://Police_game/police_game.tscn", "res://Police_game/police_game.tscn", "res://Police_game/police_game.tscn"])
+
+[node name="Title" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_right = 1148.0
+offset_bottom = 98.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("5_2pltu")
+theme_override_font_sizes/font_size = 80
+text = "One Button to play no game"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -11
+position = Vector2(685, 378)
+texture = ExtResource("6_f52ns")
+metadata/_edit_lock_ = true
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Info" type="Label" parent="."]
+offset_left = 350.0
+offset_top = 500.0
+offset_right = 779.0
+offset_bottom = 529.0
+theme_override_fonts/font = ExtResource("5_2pltu")
+theme_override_font_sizes/font_size = 24
+text = "Press and hold space to start the game!"
+
+[node name="Score" type="Label" parent="."]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 540.0
+offset_top = 555.0
+offset_right = 739.0
+offset_bottom = 584.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("5_2pltu")
+theme_override_font_sizes/font_size = 24
+text = "Placeholder Score"
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

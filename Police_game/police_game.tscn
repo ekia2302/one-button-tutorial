@@ -1,0 +1,299 @@
+[gd_scene load_steps=26 format=3 uid="uid://1rps6mxlmtyj"]
+
+[ext_resource type="Script" uid="uid://fosvslg3me0f" path="res://Police_game/police_game.gd" id="1_70cdm"]
+[ext_resource type="Texture2D" uid="uid://ilrfgy02dqwf" path="res://Assets/White.png" id="1_xoyji"]
+[ext_resource type="Texture2D" uid="uid://d37jbepyo5db3" path="res://Assets/Police/policeman-Sheet.png" id="2_f27at"]
+[ext_resource type="Texture2D" uid="uid://08kaiwxh74m8" path="res://Assets/Police/cars-Sheet.png" id="3_hmt53"]
+[ext_resource type="Script" uid="uid://c7fjubf3r0tkx" path="res://Police_game/police.gd" id="3_rvnq4"]
+[ext_resource type="Script" uid="uid://dnrojpph2vitf" path="res://Police_game/cars.gd" id="4_hmt53"]
+[ext_resource type="Texture2D" uid="uid://b56ihkkc02urm" path="res://Assets/Police/Ampeln-Sheet.png" id="6_k2xel"]
+[ext_resource type="Script" uid="uid://bsd5mmj0mn8xe" path="res://Police_game/trafficlight.gd" id="6_l6kr5"]
+[ext_resource type="FontFile" uid="uid://hd1k0g33h3m7" path="res://Assets/Roboto/Roboto-Black.ttf" id="9_xqsjs"]
+[ext_resource type="Texture2D" uid="uid://cu4jwyf8kxayf" path="res://Assets/Black.png" id="10_w1tlj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rvnq4"]
+atlas = ExtResource("2_f27at")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2xel"]
+atlas = ExtResource("2_f27at")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l6kr5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rvnq4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k2xel")
+}],
+"loop": true,
+"name": &"whistle",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70cdm"]
+atlas = ExtResource("3_hmt53")
+region = Rect2(64, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tdxcq"]
+atlas = ExtResource("3_hmt53")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h688e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70cdm")
+}],
+"loop": true,
+"name": &"green",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tdxcq")
+}],
+"loop": true,
+"name": &"red",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_53pom"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-57, 26)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Police:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(40, 21.5)]
+}
+
+[sub_resource type="Animation" id="Animation_hmt53"]
+resource_name = "drive_in"
+length = 0.4
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0001),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_rand_color"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-108, 25), Vector2(-57, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_fkff2"]
+resource_name = "drive_out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-57, 25), Vector2(118, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_l6kr5"]
+resource_name = "game_over"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-57, 25), Vector2(120, 25)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Police:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(40, 21.5), Vector2(120, 21.5)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"stop_game"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_88c4f"]
+_data = {
+&"RESET": SubResource("Animation_53pom"),
+&"drive_in": SubResource("Animation_hmt53"),
+&"drive_out": SubResource("Animation_fkff2"),
+&"game_over": SubResource("Animation_l6kr5")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l6kr5"]
+atlas = ExtResource("6_k2xel")
+region = Rect2(64, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h688e"]
+atlas = ExtResource("6_k2xel")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkff2"]
+atlas = ExtResource("6_k2xel")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_53pom"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l6kr5")
+}],
+"loop": true,
+"name": &"green",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h688e")
+}],
+"loop": true,
+"name": &"red",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fkff2")
+}],
+"loop": true,
+"name": &"yellow",
+"speed": 5.0
+}]
+
+[node name="Police_game" type="Node2D"]
+script = ExtResource("1_70cdm")
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -10
+texture = ExtResource("1_xoyji")
+
+[node name="Police" type="AnimatedSprite2D" parent="."]
+z_index = 2
+position = Vector2(40, 21.5)
+scale = Vector2(1.3, 1.315)
+sprite_frames = SubResource("SpriteFrames_l6kr5")
+script = ExtResource("3_rvnq4")
+
+[node name="AnimCooldown" type="Timer" parent="Police"]
+wait_time = 0.4
+
+[node name="Cars" type="AnimatedSprite2D" parent="."]
+z_index = -1
+position = Vector2(-57, 26)
+scale = Vector2(1.3, 1.3)
+sprite_frames = SubResource("SpriteFrames_h688e")
+animation = &"green"
+script = ExtResource("4_hmt53")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Cars"]
+libraries = {
+&"": SubResource("AnimationLibrary_88c4f")
+}
+
+[node name="Trafficlight" type="Node2D" parent="."]
+script = ExtResource("6_l6kr5")
+
+[node name="Timer" type="Timer" parent="Trafficlight"]
+wait_time = 5.0
+autostart = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Trafficlight"]
+position = Vector2(0, -48)
+scale = Vector2(0.84375, 0.875)
+sprite_frames = SubResource("SpriteFrames_53pom")
+animation = &"green"
+
+[node name="Police_instruction" type="RichTextLabel" parent="."]
+offset_left = -97.0
+offset_top = -130.0
+offset_right = 98.0
+offset_bottom = -90.0
+theme_override_fonts/normal_font = ExtResource("9_xqsjs")
+bbcode_enabled = true
+text = "Press space when there are [color=LIME_GREEN]green [/color]or [color=YELLOW]yellow[/color] lights"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hide_bar1" type="Sprite2D" parent="."]
+z_index = 2
+position = Vector2(-117.75, 0)
+scale = Vector2(0.032552086, 0.1638426)
+texture = ExtResource("10_w1tlj")
+
+[node name="Hide_bar2" type="Sprite2D" parent="."]
+z_index = 2
+position = Vector2(119.24999, 0)
+scale = Vector2(0.034114588, 0.1638426)
+texture = ExtResource("10_w1tlj")
+
+[connection signal="timeout" from="Police/AnimCooldown" to="Police" method="_on_anim_cooldown_timeout"]
+[connection signal="animation_finished" from="Cars/AnimationPlayer" to="Cars" method="_on_animation_player_animation_finished"]
+[connection signal="game_over" from="Trafficlight" to="Cars" method="_on_trafficlight_game_over"]
+[connection signal="timeout" from="Trafficlight/Timer" to="Trafficlight" method="_on_timer_timeout"]
