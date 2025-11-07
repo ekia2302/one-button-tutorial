@@ -1,10 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://tl3vr0llkim1"]
+[gd_scene load_steps=13 format=3 uid="uid://tl3vr0llkim1"]
 
 [ext_resource type="Script" uid="uid://cg45a33s20c2n" path="res://Balloon_game/balloon_game.gd" id="1_2vxba"]
 [ext_resource type="Texture2D" uid="uid://bund2l26ot17v" path="res://Assets/Balloon/background.png" id="1_cwted"]
 [ext_resource type="Script" uid="uid://8cl40q1l6cfg" path="res://Balloon_game/balloon.gd" id="2_2vxba"]
 [ext_resource type="Texture2D" uid="uid://be2ah6a5vtchm" path="res://Assets/Balloon/Ballon-Sheet.png" id="2_xflc3"]
-[ext_resource type="Script" uid="uid://dxnqvx0fh7p5r" path="res://Balloon_game/ground.gd" id="3_2vxba"]
 [ext_resource type="FontFile" uid="uid://hd1k0g33h3m7" path="res://Assets/Roboto/Roboto-Black.ttf" id="6_ljt5u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mnvog"]
@@ -75,12 +74,7 @@ animation = &"inflate"
 position = Vector2(-0.5, 55)
 shape = SubResource("RectangleShape2D_0jg5v")
 
-[node name="Difficulty" type="Timer" parent="Balloon"]
-wait_time = 5.0
-autostart = true
-
 [node name="Ground" type="Area2D" parent="."]
-script = ExtResource("3_2vxba")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
 shape = SubResource("WorldBoundaryShape2D_fw6nh")
@@ -103,7 +97,5 @@ autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="timeout" from="Balloon/Difficulty" to="Balloon" method="_on_difficulty_timeout"]
-[connection signal="body_entered" from="Ground" to="Ground" method="_on_body_entered"]
-[connection signal="game_over" from="Ground" to="." method="_on_ground_game_over"]
-[connection signal="game_over" from="Ground" to="Balloon" method="_on_ground_game_over"]
+[connection signal="body_entered" from="Ground" to="." method="_on_ground_body_entered"]
+[connection signal="body_entered" from="Ground" to="Balloon" method="_on_ground_body_entered"]

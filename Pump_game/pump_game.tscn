@@ -76,10 +76,6 @@ position = Vector2(-21.715, -6.85)
 scale = Vector2(2.5, 2.5)
 script = ExtResource("2_jieiu")
 
-[node name="Difficulty" type="Timer" parent="Pump_and_barrel"]
-wait_time = 5.0
-autostart = true
-
 [node name="Pump" type="AnimatedSprite2D" parent="Pump_and_barrel"]
 sprite_frames = SubResource("SpriteFrames_60xuv")
 
@@ -115,4 +111,3 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="game_over" from="Pump_and_barrel" to="." method="_on_pump_and_barrel_game_over"]
-[connection signal="timeout" from="Pump_and_barrel/Difficulty" to="Pump_and_barrel" method="_on_difficulty_timeout"]
